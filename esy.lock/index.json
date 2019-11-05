@@ -1,5 +1,5 @@
 {
-  "checksum": "3e1c8d5990ff020a93e782769a0afa6e",
+  "checksum": "ed96cba19ef96d7b42ecaef7cc668bf3",
   "root": "wiktionary-parser@link-dev:./package.json",
   "node": {
     "wiktionary-parser@link-dev:./package.json": {
@@ -20,7 +20,8 @@
       ],
       "devDependencies": [
         "ocaml@4.6.1000@d41d8cd9", "@opam/odoc@opam:1.4.2@6f058006",
-        "@opam/merlin@opam:3.3.2@7a364181"
+        "@opam/merlin@opam:3.3.2@7a364181",
+        "@opam/markup@opam:0.8.1@43cd811e"
       ]
     },
     "refmterr@3.2.2@d41d8cd9": {
@@ -581,6 +582,32 @@
         "@esy-ocaml/substs@0.0.1@d41d8cd9"
       ],
       "devDependencies": [ "ocaml@4.6.1000@d41d8cd9" ]
+    },
+    "@opam/markup@opam:0.8.1@43cd811e": {
+      "id": "@opam/markup@opam:0.8.1@43cd811e",
+      "name": "@opam/markup",
+      "version": "opam:0.8.1",
+      "source": {
+        "type": "install",
+        "source": [
+          "archive:https://opam.ocaml.org/cache/md5/d9/d9cd1bdd9ee5d65af7d36ad5900cc0e2#md5:d9cd1bdd9ee5d65af7d36ad5900cc0e2",
+          "archive:https://github.com/aantron/markup.ml/archive/0.8.1.tar.gz#md5:d9cd1bdd9ee5d65af7d36ad5900cc0e2"
+        ],
+        "opam": {
+          "name": "markup",
+          "version": "0.8.1",
+          "path": "esy.lock/opam/markup.0.8.1"
+        }
+      },
+      "overrides": [],
+      "dependencies": [
+        "@opam/uutf@opam:1.0.2@4440868f", "@opam/uchar@opam:0.0.2@c8218eea",
+        "@opam/dune@opam:1.11.4@21d66ccd", "@esy-ocaml/substs@0.0.1@d41d8cd9"
+      ],
+      "devDependencies": [
+        "@opam/uutf@opam:1.0.2@4440868f", "@opam/uchar@opam:0.0.2@c8218eea",
+        "@opam/dune@opam:1.11.4@21d66ccd"
+      ]
     },
     "@opam/junit@opam:2.0.1@1b4d302c": {
       "id": "@opam/junit@opam:2.0.1@1b4d302c",

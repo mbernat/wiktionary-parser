@@ -3,7 +3,9 @@
 These are some tools to process wiktionary XML dumps.
 
 To obtain such a dump go [here](https://dumps.wikimedia.org/enwiktionary/latest/) and download
-`enwiktionary-latest-pages-articles.xml.bz2`.
+[enwiktionary-latest-pages-articles.xml.bz2](https://dumps.wikimedia.org/enwiktionary/latest/enwiktionary-latest-pages-articles.xml.bz2).
+
+**NOTE** that as of today (5 Nov 2019) the dump is 684MB compressed and 5.7GB uncompressed.
 
 ## Usage
 
