@@ -7,3 +7,4 @@ _opam
 *.byte
 *.native
 *.install
+dumps/enwiktionary-latest-pages-articles.xml

@@ -2,6 +2,9 @@
 
 These are some tools to process wiktionary XML dumps.
 
+To obtain such a dump go [here](https://dumps.wikimedia.org/enwiktionary/latest/) and download
+`enwiktionary-latest-pages-articles.xml.bz2`.
+
 ## Usage
 
 You need Esy, you can install the beta using [npm](https://npmjs.com):
