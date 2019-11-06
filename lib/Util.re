@@ -1,135 +1,96 @@
-//open Markup
-
 /*
 TODO parallel processing:
-do a fast scan over the whole file and split it into batches to be processed in paralles
-*/
-
-/*
-parsing optional elements:
-A
-option(B)
-C
-
-AC -> A ..ok.. B ..nope .. C .. ok ..
-ABC
-
-the list of parsers is full
-the list of elements may contain holes
-so fold on parser list:
-if required: parse or error
-if optional: parse -> some, no parse -> none & move onto the next parser
+do a fast scan over the whole file and split it into batches to be processed in parallel
 */
 
 let dump_full = "dumps/enwiktionary-latest-pages-articles.xml"
-let dump_medium = "dumps/enwiktionary-1e5.xml"
+let dump_medium = "dumps/enwiktionary-1e6.xml"
 let dump_head = "dumps/enwiktionary-head.xml"
 
 let test_name = name => ((_ns, name'), _attrs) => name == name';
 
-type dom = | Text(string) | Element(string, list(dom))
+type dom = String(string) | Element(string, list(dom))
+type dict = Text(string) | Map(list((string, dict)))
 
-type parse_error =
-  | ExpectedTextGotElement(string)
-  | ExpectedElementGotText(string, string)
-  | ExpectedElementGotElement(string, string)
+exception ExpectedTextFor(string)
+exception ExpectedMapFor(string)
+exception RequiredFieldMissing(string)
 
-type parser('a) = dom => result('a, parse_error)
-type field('a) = Required(parser('a)) | Optional(parser('a))
-
-let rec text = p => switch(p) {
-  | Text(t) => Ok(t)
-  | Element(name, _cs) => Error(ExpectedTextGotElement(name))
+let text = (k, d) => switch(d) {
+  | Text(t) => t
+  | Map(_) => raise(ExpectedTextFor(k))
 }
 
-/*
-TODO figure out how do data-driven xml parsing
-*/
-
-// parse_record: [parser], [dom] -> [parsed things]
-// f
-
-let rec parse_record = (parsers, cs) => switch(parsers) {
-  | [] => []
-  | [p, ...tl] => []
+let map = (k, d) => switch(d) {
+  | Text(_) => raise(ExpectedMapFor(k))
+  | Map(m) => m
 }
 
-let parse_element = (name, f, e) => {print_endline(name); switch(e) {
-  | Text(t) => Error(ExpectedElementGotText(name, t))
-  | Element(name', cs) =>
-    if (name == name')
-      f(cs)
-    else
-      Error(ExpectedElementGotElement(name, name'))
-}}
-
-let bind = (r, f) => switch(r) {
-  | Ok(a) => f(a)
-  | Error(b) => Error(b)
+let required = (k, l) => {
+  let res = List.find_opt(((k', _v)) => k == k', l);
+  switch (res) {
+    | Some((k, v)) => v
+    | None => raise(RequiredFieldMissing(k))
+  }
 }
 
-let single = (name, e) => parse_element(name, e' => e' |> List.hd |> text, e)
+let optional_full = (k, l) => {
+  let res = List.find_opt(((k', v)) => k == k', l);
+  switch (res) {
+    | Some((k, v)) => Some(v)
+    | None => None
+  }
+}
+
+module Option {
+  let map = (f, o) => switch(o) {
+    | Some(x) => Some(f(x))
+    | None => None
+  }
+}
+
+let simple = (k, e) => e |> required(k) |> text(k);
+let complex = (k, e) => e |> required(k) |> map(k);
+let optional = (k, e) => e |> optional_full(k) |> Option.map(text(k))
+let optional_with = (k, f, e) => e |> optional_full(k) |> Option.map(x => x |> text(k) |> f)
+
 
 module Contributor {
   type t = {
-    username: string,
-    id: int
+    username: option(string),
+    id: option(int),
+    ip: option(string)
   }
 
-  let parsers = [
-    Required(single("username")),
-    Required(single("id"))
-  ];
-
-  let parse_contributor = cs => {
-    let [username, id] = parse_record(parsers, cs);
-    Ok({
-      username: username,
-      id: id |> int_of_string
-    })
+  let parse = d => {
+    username: d |> optional("username"),
+    id: d |> optional_with("id", int_of_string),
+    ip: d |> optional("ip")
   }
-
-  let parse = parse_element("contributor", parse_contributor)
 }
 
 module Revision {
   type t = {
     id: int,
-    parentid: int,
+    parentid: option(int),
     timestamp: string,
     contributor: Contributor.t,
-    comment: string,
+    comment: option(string),
     model: string,
     format: string,
     text: string
   }
 
-  let parsers = [
-    Required(single("id")),
-    Required(single("parentid")),
-    Required(single("timestamp")),
-    Required(Contributor.parse),
-    Required(single("comment")),
-    Required(single("model")),
-    Required(single("format")),
-    Required(single("text"))
-  ];
-
-  let parse_revision = cs => {
-    let [id, parentid, timestamp, contributor, comment, model, format, text] = parse_record(parsers, cs);
-    Ok({
-      id: id |> int_of_string,
-      parentid: parentid |> int_of_string,
-      timestamp: timestamp,
-      contributor: contributor,
-      comment: comment,
-      model: model,
-      format: format,
-      text: text
-    })
-}
-
-  let parse = parse_element("revision", parse_revision)
+  let parse = d => {
+    id: d |> simple("id") |> int_of_string,
+    parentid: d |> optional_with("parentid", int_of_string),
+    timestamp: d |> simple("timestamp"),
+    contributor: d |> complex("contributor") |> Contributor.parse,
+    comment: d |> optional("comment"),
+    model: d |> simple("model"),
+    format: d |> simple("format"),
+    text: d |> simple("text")
+  }
 }
 
 module Page {
@@ -141,30 +102,17 @@ module Page {
     revision: Revision.t
   }
 
-  let parsers = [
-    Required(text("title")),
-    Required(text("ns")),
-    Required(text("id")),
-    Optional(text("restrictions")),
-    Required(Revision.parse)
-  ]
-
-  let parse_page = cs => {
-    let [title, ns, id, restrictions, revision] = parse_record(parsers, cs);
-    Ok({
-      title: title,
-      ns: ns |> int_of_string,
-      id: id |> int_of_string,
-      restrictions: restrictions,
-      revision: revision
-    })
+  let parse = d => {
+    title: d |> simple("title"),
+    ns: d |> simple("ns") |> int_of_string,
+    id: d |> simple("id") |> int_of_string,
+    restrictions: d |> optional("restrictions"),
+    revision: d |> complex("revision") |> Revision.parse
   }
-
-  let parse = parse_element("page", parse_page)
 }
 
 let get_dom = s => s |> Markup.tree(
-    ~text=(ss => Text(String.concat("", ss))),
+    ~text=(ss => String(String.concat("", ss))),
     ~element=(((_ns, name), _attrs, children) => Element(name, children))
   );
 
@@ -177,12 +125,29 @@ let from_opt = o => switch(o) {
 
 let string_of = p => p |> Markup.write_xml |> Markup.to_string;
 
+let rec dict_of_children = l => switch(l) {
+  | [c] => dict_of_dom(c)
+  | l => {
+    let merged = l
+    |> List.map(dom => dom |> dict_of_dom |> map("merging"))
+    |> List.flatten;
+    Map(merged)
+  }
+}
+and dict_of_dom = dom => switch(dom) {
+  | String(s) => Text(s)
+  | Element(name, ch) => Map([(name, dict_of_children(ch))])
+}
 
 let add_page = (ps, page_stream) => {
-  print_endline("processing page")
-  //print_endline(string_of(page_stream))
   open Page
-  let page = page_stream |> get_dom |> from_opt |> parse;
+  let page = page_stream
+    |> get_dom
+    |> from_opt
+    |> dict_of_dom
+    |> map("root of page")
+    |> complex("page")
+    |> parse;
   List.cons(page.title, ps)
 }
 
@@ -192,6 +157,7 @@ let hello = () => {
   let pages = xml_file
   |> parse_xml
   |> signals
+  |> trim
   |> content
   |> elements(test_name("page"))
   |> fold(add_page, [])
