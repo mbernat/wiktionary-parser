@@ -1,7 +1,23 @@
 {
-  "checksum": "ed96cba19ef96d7b42ecaef7cc668bf3",
+  "checksum": "8ecf742d794fcdf4724927b096739ac7",
   "root": "wiktionary-parser@link-dev:./package.json",
   "node": {
+    "yarn-pkg-config@github:esy-ocaml/yarn-pkg-config#cca65f99674ed2d954d28788edeb8c57fada5ed0@d41d8cd9": {
+      "id":
+        "yarn-pkg-config@github:esy-ocaml/yarn-pkg-config#cca65f99674ed2d954d28788edeb8c57fada5ed0@d41d8cd9",
+      "name": "yarn-pkg-config",
+      "version":
+        "github:esy-ocaml/yarn-pkg-config#cca65f99674ed2d954d28788edeb8c57fada5ed0",
+      "source": {
+        "type": "install",
+        "source": [
+          "github:esy-ocaml/yarn-pkg-config#cca65f99674ed2d954d28788edeb8c57fada5ed0"
+        ]
+      },
+      "overrides": [],
+      "dependencies": [],
+      "devDependencies": []
+    },
     "wiktionary-parser@link-dev:./package.json": {
       "id": "wiktionary-parser@link-dev:./package.json",
       "name": "wiktionary-parser",
@@ -19,8 +35,8 @@
         "@opam/dune@opam:1.11.4@21d66ccd", "@esy-ocaml/reason@3.5.2@d41d8cd9"
       ],
       "devDependencies": [
-        "ocaml@4.6.1000@d41d8cd9", "@opam/odoc@opam:1.4.2@6f058006",
-        "@opam/merlin@opam:3.3.2@7a364181",
+        "ocaml@4.6.1000@d41d8cd9", "@opam/sqlite3@opam:4.4.1@9424e9ab",
+        "@opam/odoc@opam:1.4.2@6f058006", "@opam/merlin@opam:3.3.2@7a364181",
         "@opam/markup@opam:0.8.1@43cd811e"
       ]
     },
@@ -262,6 +278,89 @@
       ],
       "devDependencies": [
         "ocaml@4.6.1000@d41d8cd9", "@opam/ocamlbuild@opam:0.14.0@6ac75d03"
+      ]
+    },
+    "@opam/stdio@opam:v0.12.0@04b3b004": {
+      "id": "@opam/stdio@opam:v0.12.0@04b3b004",
+      "name": "@opam/stdio",
+      "version": "opam:v0.12.0",
+      "source": {
+        "type": "install",
+        "source": [
+          "archive:https://opam.ocaml.org/cache/md5/b2/b261ff2d5667fde960c95e50cff668da#md5:b261ff2d5667fde960c95e50cff668da",
+          "archive:https://ocaml.janestreet.com/ocaml-core/v0.12/files/stdio-v0.12.0.tar.gz#md5:b261ff2d5667fde960c95e50cff668da"
+        ],
+        "opam": {
+          "name": "stdio",
+          "version": "v0.12.0",
+          "path": "esy.lock/opam/stdio.v0.12.0"
+        }
+      },
+      "overrides": [],
+      "dependencies": [
+        "ocaml@4.6.1000@d41d8cd9", "@opam/dune@opam:1.11.4@21d66ccd",
+        "@opam/base@opam:v0.12.2@d687150c",
+        "@esy-ocaml/substs@0.0.1@d41d8cd9"
+      ],
+      "devDependencies": [
+        "ocaml@4.6.1000@d41d8cd9", "@opam/dune@opam:1.11.4@21d66ccd",
+        "@opam/base@opam:v0.12.2@d687150c"
+      ]
+    },
+    "@opam/sqlite3@opam:4.4.1@9424e9ab": {
+      "id": "@opam/sqlite3@opam:4.4.1@9424e9ab",
+      "name": "@opam/sqlite3",
+      "version": "opam:4.4.1",
+      "source": {
+        "type": "install",
+        "source": [
+          "archive:https://opam.ocaml.org/cache/md5/93/93763885a3606252aa8004f7662dd161#md5:93763885a3606252aa8004f7662dd161",
+          "archive:https://github.com/mmottl/sqlite3-ocaml/releases/download/4.4.1/sqlite3-4.4.1.tbz#md5:93763885a3606252aa8004f7662dd161"
+        ],
+        "opam": {
+          "name": "sqlite3",
+          "version": "4.4.1",
+          "path": "esy.lock/opam/sqlite3.4.4.1"
+        }
+      },
+      "overrides": [],
+      "dependencies": [
+        "ocaml@4.6.1000@d41d8cd9", "@opam/stdio@opam:v0.12.0@04b3b004",
+        "@opam/dune-configurator@opam:1.0.0@4873acd8",
+        "@opam/dune@opam:1.11.4@21d66ccd",
+        "@opam/conf-sqlite3@opam:1@b5e3d3cd",
+        "@opam/base@opam:v0.12.2@d687150c",
+        "@esy-ocaml/substs@0.0.1@d41d8cd9"
+      ],
+      "devDependencies": [
+        "ocaml@4.6.1000@d41d8cd9",
+        "@opam/dune-configurator@opam:1.0.0@4873acd8",
+        "@opam/dune@opam:1.11.4@21d66ccd"
+      ]
+    },
+    "@opam/sexplib0@opam:v0.12.0@e432406d": {
+      "id": "@opam/sexplib0@opam:v0.12.0@e432406d",
+      "name": "@opam/sexplib0",
+      "version": "opam:v0.12.0",
+      "source": {
+        "type": "install",
+        "source": [
+          "archive:https://opam.ocaml.org/cache/md5/24/2486a25d3a94da9a94acc018b5f09061#md5:2486a25d3a94da9a94acc018b5f09061",
+          "archive:https://ocaml.janestreet.com/ocaml-core/v0.12/files/sexplib0-v0.12.0.tar.gz#md5:2486a25d3a94da9a94acc018b5f09061"
+        ],
+        "opam": {
+          "name": "sexplib0",
+          "version": "v0.12.0",
+          "path": "esy.lock/opam/sexplib0.v0.12.0"
+        }
+      },
+      "overrides": [],
+      "dependencies": [
+        "ocaml@4.6.1000@d41d8cd9", "@opam/dune@opam:1.11.4@21d66ccd",
+        "@esy-ocaml/substs@0.0.1@d41d8cd9"
+      ],
+      "devDependencies": [
+        "ocaml@4.6.1000@d41d8cd9", "@opam/dune@opam:1.11.4@21d66ccd"
       ]
     },
     "@opam/seq@opam:0.2@35c16df8": {
@@ -712,6 +811,25 @@
         "ocaml@4.6.1000@d41d8cd9", "@opam/dune@opam:1.11.4@21d66ccd"
       ]
     },
+    "@opam/dune-configurator@opam:1.0.0@4873acd8": {
+      "id": "@opam/dune-configurator@opam:1.0.0@4873acd8",
+      "name": "@opam/dune-configurator",
+      "version": "opam:1.0.0",
+      "source": {
+        "type": "install",
+        "source": [ "no-source:" ],
+        "opam": {
+          "name": "dune-configurator",
+          "version": "1.0.0",
+          "path": "esy.lock/opam/dune-configurator.1.0.0"
+        }
+      },
+      "overrides": [],
+      "dependencies": [
+        "@opam/dune@opam:1.11.4@21d66ccd", "@esy-ocaml/substs@0.0.1@d41d8cd9"
+      ],
+      "devDependencies": [ "@opam/dune@opam:1.11.4@21d66ccd" ]
+    },
     "@opam/dune@opam:1.11.4@21d66ccd": {
       "id": "@opam/dune@opam:1.11.4@21d66ccd",
       "name": "@opam/dune",
@@ -770,6 +888,51 @@
         "ocaml@4.6.1000@d41d8cd9", "@opam/dune@opam:1.11.4@21d66ccd",
         "@opam/base-unix@opam:base@87d0b2eb"
       ]
+    },
+    "@opam/conf-sqlite3@opam:1@b5e3d3cd": {
+      "id": "@opam/conf-sqlite3@opam:1@b5e3d3cd",
+      "name": "@opam/conf-sqlite3",
+      "version": "opam:1",
+      "source": {
+        "type": "install",
+        "source": [ "no-source:" ],
+        "opam": {
+          "name": "conf-sqlite3",
+          "version": "1",
+          "path": "esy.lock/opam/conf-sqlite3.1"
+        }
+      },
+      "overrides": [],
+      "dependencies": [
+        "@opam/conf-pkg-config@opam:1.1@67c69c0c",
+        "@esy-ocaml/substs@0.0.1@d41d8cd9"
+      ],
+      "devDependencies": []
+    },
+    "@opam/conf-pkg-config@opam:1.1@67c69c0c": {
+      "id": "@opam/conf-pkg-config@opam:1.1@67c69c0c",
+      "name": "@opam/conf-pkg-config",
+      "version": "opam:1.1",
+      "source": {
+        "type": "install",
+        "source": [ "no-source:" ],
+        "opam": {
+          "name": "conf-pkg-config",
+          "version": "1.1",
+          "path": "esy.lock/opam/conf-pkg-config.1.1"
+        }
+      },
+      "overrides": [
+        {
+          "opamoverride":
+            "esy.lock/overrides/opam__s__conf_pkg_config_opam__c__1.1_opam_override"
+        }
+      ],
+      "dependencies": [
+        "yarn-pkg-config@github:esy-ocaml/yarn-pkg-config#cca65f99674ed2d954d28788edeb8c57fada5ed0@d41d8cd9",
+        "@esy-ocaml/substs@0.0.1@d41d8cd9"
+      ],
+      "devDependencies": []
     },
     "@opam/conf-m4@opam:1@3b2b148a": {
       "id": "@opam/conf-m4@opam:1@3b2b148a",
@@ -890,6 +1053,34 @@
       ],
       "devDependencies": [
         "ocaml@4.6.1000@d41d8cd9", "@opam/ocamlfind@opam:1.8.1@ff07b0f9"
+      ]
+    },
+    "@opam/base@opam:v0.12.2@d687150c": {
+      "id": "@opam/base@opam:v0.12.2@d687150c",
+      "name": "@opam/base",
+      "version": "opam:v0.12.2",
+      "source": {
+        "type": "install",
+        "source": [
+          "archive:https://opam.ocaml.org/cache/md5/71/7150e848a730369a2549d01645fb6c72#md5:7150e848a730369a2549d01645fb6c72",
+          "archive:https://github.com/janestreet/base/archive/v0.12.2.tar.gz#md5:7150e848a730369a2549d01645fb6c72"
+        ],
+        "opam": {
+          "name": "base",
+          "version": "v0.12.2",
+          "path": "esy.lock/opam/base.v0.12.2"
+        }
+      },
+      "overrides": [],
+      "dependencies": [
+        "ocaml@4.6.1000@d41d8cd9", "@opam/sexplib0@opam:v0.12.0@e432406d",
+        "@opam/dune-configurator@opam:1.0.0@4873acd8",
+        "@opam/dune@opam:1.11.4@21d66ccd", "@esy-ocaml/substs@0.0.1@d41d8cd9"
+      ],
+      "devDependencies": [
+        "ocaml@4.6.1000@d41d8cd9", "@opam/sexplib0@opam:v0.12.0@e432406d",
+        "@opam/dune-configurator@opam:1.0.0@4873acd8",
+        "@opam/dune@opam:1.11.4@21d66ccd"
       ]
     },
     "@opam/atdgen-runtime@opam:2.0.0@60f6faab": {

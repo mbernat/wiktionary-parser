@@ -31,6 +31,7 @@
     "@opam/merlin": "*",
     "ocaml": "~4.6.0",
     "@opam/odoc": "*",
-    "@opam/markup": "*"
+    "@opam/markup": "*",
+    "@opam/sqlite3": "*"
   }
 }
