@@ -1,0 +1,4 @@
+(executable
+  (name stats)
+  (public_name stats)
+  (libraries lib))

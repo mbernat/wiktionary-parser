@@ -1,0 +1,4 @@
+(executable
+  (name load)
+  (public_name load)
+  (libraries lib))
