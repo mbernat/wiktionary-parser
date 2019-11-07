@@ -13,23 +13,12 @@ let parse_page_stream = ps =>
     |> Page.complex("page")
     |> Page.Page.parse;
 
-let add_page = (ps, page_stream) => {
-  open Page
-  let page = parse_page_stream(page_stream);
-  let headings = Text.get_langs(page.revision.text) |> List.map(fst);
-  let info = String.concat(" ", List.cons(page.title, headings))
-  List.cons(info, ps)
-}
-
-let process = (filename, f) => {
+let page_stream = xml_file => {
   open Markup
-  let (xml_file, close) = file(filename);
-  let pages = xml_file
+  xml_file
   |> parse_xml
   |> signals
   |> trim
   |> content
   |> elements(test_name("page"))
-  |> fold(f, []);
-  (pages, close)
 }
