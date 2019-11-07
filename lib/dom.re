@@ -15,16 +15,16 @@ let get = s => s |> Markup.tree(
 
 let rec dict_of_children = l => switch(l) {
   // Wiktionary seems to treat nodes with no children as text nodes
-  | [] => Page.Text("")
+  | [] => Dict.Text("")
   | [c] => to_dict(c)
   | l => {
     let merged = l
     |> List.map(dom => dom |> to_dict |> Page.map("merging"))
     |> List.flatten;
-    Page.Map(merged)
+    Dict.Map(merged)
   }
 }
 and to_dict = dom => switch(dom) {
-  | Text(s) => Page.Text(s)
+  | Text(s) => Dict.Text(s)
   | Element(name, ch) => Map([(name, dict_of_children(ch))])
 }

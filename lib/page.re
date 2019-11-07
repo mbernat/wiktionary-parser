@@ -1,4 +1,4 @@
-type dict = Text(string) | Map(list((string, dict)))
+open Dict
 
 exception ExpectedTextFor(string)
 exception ExpectedMapFor(string)
