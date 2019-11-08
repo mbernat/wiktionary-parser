@@ -4,22 +4,22 @@ exception ExpectedMapFor of string
 exception RequiredFieldMissing of string 
 let text k d =
   match d with
-  | ((Text (t))[@explicit_arity ]) -> t
-  | Map _ -> raise ((ExpectedTextFor (k))[@explicit_arity ])
+  | ((Text (t))) -> t
+  | Map _ -> raise ((ExpectedTextFor (k)))
 let map k d =
   match d with
-  | Text _ -> raise ((ExpectedMapFor (k))[@explicit_arity ])
-  | ((Map (m))[@explicit_arity ]) -> m
+  | Text _ -> raise ((ExpectedMapFor (k)))
+  | ((Map (m))) -> m
 let required k l =
   let res = List.find_opt (fun (k', _v) -> k = k') l in
   match res with
   | ((Some (k, v))) -> v
-  | None -> raise ((RequiredFieldMissing (k))[@explicit_arity ])
+  | None -> raise ((RequiredFieldMissing (k)))
 module Option =
   struct
     let map f o =
       match o with
-      | ((Some (x))[@explicit_arity ]) -> ((Some ((f x)))[@explicit_arity ])
+      | ((Some (x))) -> ((Some ((f x))))
       | None -> None
   end
 let optional_full k l =

@@ -4,8 +4,8 @@ let process_page page_stream =
     let text_dict = Text.parse (page.revision).text in
     let headings =
       match text_dict with
-      | ((Dict.Text (a))[@explicit_arity ]) -> [a]
-      | ((Dict.Map (m))[@explicit_arity ]) -> List.map fst m in
+      | ((Dict.Text (a))) -> [a]
+      | ((Dict.Map (m))) -> List.map fst m in
     String.concat " " (List.cons page.title headings)
 let process_dump filename =
   let open Lib.Dump in

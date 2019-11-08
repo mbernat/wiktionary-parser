@@ -21,15 +21,15 @@ let rec parse_headings n text =
     let rec go l acc =
       match l with
       | [] -> acc
-      | ((Text (a))[@explicit_arity ])::tl -> go tl acc
-      | ((Delim (a))[@explicit_arity ])::((Text (b))[@explicit_arity ])::tl
+      | ((Text (a)))::tl -> go tl acc
+      | ((Delim (a)))::((Text (b)))::tl
           -> go tl (List.cons ((cut n a), (parse_headings (n + 1) b)) acc)
-      | ((Delim (a))[@explicit_arity ])::tl ->
+      | ((Delim (a)))::tl ->
           go tl
-            (List.cons ((cut n a), ((Dict.Text (""))[@explicit_arity ])) acc) in
+            (List.cons ((cut n a), ((Dict.Text ("")))) acc) in
     let splits = Str.full_split (heading n) text in
     match splits with
-    | ((Text (a))[@explicit_arity ])::[] -> ((Dict.Text (a))
-        [@explicit_arity ])
-    | l -> ((Dict.Map ((go l [])))[@explicit_arity ])
+    | ((Text (a)))::[] -> ((Dict.Text (a))
+        )
+    | l -> ((Dict.Map ((go l []))))
 let parse = parse_headings 2

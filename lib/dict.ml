@@ -4,8 +4,8 @@ type t =
 let print_keys dict =
   let rec go n d =
     match d with
-    | ((Text (string))[@explicit_arity ]) -> ()
-    | ((Map (m))[@explicit_arity ]) ->
+    | ((Text (string))) -> ()
+    | ((Map (m))) ->
         List.iter
           (fun (k, d') ->
              print_endline (String.concat "" [String.make (2 * n) ' '; k]);
