@@ -9,7 +9,8 @@
     "release": {
       "bin": [
         "stats",
-        "load"
+        "load",
+        "test"
       ]
     },
     "buildEnv": {
@@ -19,6 +20,7 @@
   "scripts": {
     "stats": "esy x stats",
     "load": "esy x load",
+    "test": "esy x test",
     "doc": "esy dune build @doc"
   },
   "dependencies": {
