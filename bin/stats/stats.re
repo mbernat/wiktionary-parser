@@ -6,19 +6,16 @@ let process_page = page_stream => {
     | Dict.Text(a) => [a]
     | Dict.Map(m) => List.map(fst, m);
   }
-  if (page.title == "pie")
-    Dict.print_keys(text_dict);
   String.concat(" ", List.cons(page.title, headings))
 }
 
 let process_dump = filename => {
   open Lib.Dump
   let (xml_file, close) = Markup.file(filename);
-  let _pages = page_stream(xml_file)
+  let () = page_stream(xml_file)
     |> Markup.map(process_page)
-    |> Markup.to_list
+    |> Markup.iter(print_endline)
   close();
-  //print_endline(String.concat("\n", pages));
 }
 
 let () = {
